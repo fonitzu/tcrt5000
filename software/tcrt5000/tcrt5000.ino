@@ -3,6 +3,10 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+// Sketch version
+#define VERSION_MAJOR	0
+#define VERSION_MINOR	1
+
 // OLED display width, in pixels
 #define DISPLAY_WIDTH 128 
 // OLED display height, in pixels
@@ -43,6 +47,7 @@ void setup()
 		}
 	}
 
+	print_version();
 	// Display static elements
 	// "Distance" header
 	// and the rectangle for the fill bar.
@@ -131,4 +136,24 @@ void draw_distance( void )
   
 	display.display();
 	previous_bar_width = bar_width;
+}
+
+void print_version( void )
+{
+	Serial.print( F( "Distance measurement with TCRT5000, Version " ) );
+	Serial.print( VERSION_MAJOR );
+	Serial.print( F( "." ) );
+	Serial.println( VERSION_MINOR );
+	display.clearDisplay();
+	display.setTextSize( 2 );
+	display.setTextColor( WHITE );
+	display.setCursor( 0, 0 );
+	display.print( F( "Version" ) );
+	display.setTextSize( 4 );
+	display.setCursor( 0, 20 );
+	display.print( VERSION_MAJOR );
+	display.print( F( "." ) );
+	display.print( VERSION_MINOR );
+	display.display();
+	delay( 3000 );
 }
