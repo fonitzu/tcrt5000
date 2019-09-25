@@ -115,7 +115,8 @@ void print_distance( void )
 void draw_distance( void )
 {
 	static uint16_t previous_bar_width;
-	uint16_t bar_width = 126.0 * ( sensor_value / 1024.0 );
+	// +0.5 is used to round to the nearest integer
+	uint16_t bar_width = 126.0 * ( sensor_value / 1024.0 ) + 0.5;
 	
 	if( bar_width == previous_bar_width )
 	{
@@ -126,12 +127,12 @@ void draw_distance( void )
 	if( bar_width > previous_bar_width )
 	{
  		// extend the bar
-		display.fillRect( previous_bar_width, 51, bar_width - previous_bar_width, 8, WHITE );
+		display.fillRect( previous_bar_width + 1, 51, bar_width - previous_bar_width, 8, WHITE );
 	}
 	else
 	{
 		// cut the bar
-		display.fillRect( bar_width, 51, previous_bar_width - bar_width, 8, BLACK );
+		display.fillRect( bar_width + 1, 51, previous_bar_width - bar_width, 8, BLACK );
 	}
   
 	display.display();
